@@ -1,2 +1,2 @@
-# SQLITEMapReduce
-mapreduce in sqlite
+# SQLITE MapReduce
+map-reduce in sqlite
