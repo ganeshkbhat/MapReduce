@@ -1,0 +1,2 @@
+# SQLITEMapReduce
+mapreduce in sqlite
