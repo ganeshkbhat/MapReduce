@@ -23,4 +23,3 @@ const mapreduce = require("./mapreduce");
 
 module.exports.cMapReduce = cMapReduce;
 module.exports.cMapReduceAsync = cMapReduceAsync;
-
