@@ -1,6 +1,20 @@
 /**
  * 
- */
+ * Package: sql-mapreduce
+ * Author: Ganesh B
+ * Description: 
+ * Install: npm i sql-mapreduce --save
+ * Github: https://github.com/ganeshkbhat/mapreduce
+ * npmjs Link: https://www.npmjs.com/package/sql-mapreduce
+ * File: .js
+ * File Description: 
+ * 
+ * 
+*/
+
+/* eslint no-console: 0 */
+
+'use strict';
 
 // https://www.npmjs.com/package/sqlite3
 const sqlite3 = require('sqlite3');
@@ -47,17 +61,9 @@ async function mapreduceAsync(connectionPaths, query, driverCallback, preCallbac
         });
     };
 
-    connectionPaths.forEach(driverCallback);
+    new Promise.all(connectionPaths.forEach(driverCallback));
     return projection(allResults);
 }
-
-const connectionPaths = ['path/to/db1.sqlite', 'path/to/db2.sqlite'];
-const searchQuery = 'SELECT * FROM your_table WHERE your_condition;';
-const searchResults = mapreduce(connectionPaths, searchQuery);
-
-searchResults.forEach(result => {
-    console.log(result);
-});
 
 module.exports.mapreduce = mapreduce;
 module.exports.mapreduceAsync = mapreduceAsync;
