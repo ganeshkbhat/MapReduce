@@ -29,6 +29,33 @@ describe('searchInDatabase', () => {
     });
 });
 
+describe('searchInDatabase - 2', () => {
+    it('should fetch and process results from database', async () => {
+        const mockResults = [{ id: 1, name: 'Item 1' }];
+        const mockDatabase = {
+            all: (query, params, callback) => callback(null, mockResults),
+            close: () => {},
+        };
+
+        const mockDatabaseConstructor = sinon.fake.returns(mockDatabase);
+        sinon.replace(sqlite3, 'Database', mockDatabaseConstructor);
+
+        const preCallback = sinon.stub().returns(mockResults);
+        const filePath = 'mock/db.sqlite';
+        const query = 'SELECT * FROM items;';
+        
+        // Use bind to pass the preCallback name and its arguments
+        const results = await searchInDatabase(filePath, query, preCallback.bind(null, mockResults));
+
+        expect(mockDatabaseConstructor.calledOnce).to.be.true;
+        expect(mockDatabase.all.calledOnce).to.be.true;
+        expect(preCallback.calledOnce).to.be.true;
+        expect(results).to.deep.equal(mockResults);
+
+        sinon.restore();
+    });
+});
+
 describe('runSearchAcrossDatabases', () => {
     it('should collect and process results from multiple databases', done => {
         const filePaths = ['mock/db1.sqlite', 'mock/db2.sqlite'];

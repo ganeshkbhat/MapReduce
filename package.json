@@ -13,6 +13,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "comlink": "^4.4.1",
+    "concurrency.js": "^0.0.3",
+    "odbc": "^2.4.8",
     "sqlite3": "^5.1.6"
   }
 }
