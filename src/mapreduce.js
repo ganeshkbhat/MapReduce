@@ -58,3 +58,6 @@ const searchResults = mapreduce(connectionPaths, searchQuery);
 searchResults.forEach(result => {
     console.log(result);
 });
+
+module.exports.mapreduce = mapreduce;
+module.exports.mapreduceAsync = mapreduceAsync;
