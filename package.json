@@ -1,7 +1,7 @@
 {
-  "name": "mapreduce",
+  "name": "sql-mapreduce",
   "version": "1.0.0",
-  "description": "mapreduce in sqlite",
+  "description": "sql-mapreduce in sqlite",
   "main": "index.js",
   "directories": {
     "test": "tests"
