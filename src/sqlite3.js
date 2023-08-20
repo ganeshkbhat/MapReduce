@@ -5,7 +5,14 @@
 // https://github.com/TryGhost/node-sqlite3/wiki/API
 
 
-
+/**
+ *
+ *
+ * @param {*} filePaths
+ * @param {*} searchQuery
+ * @param {*} preCallback
+ * @param {*} projection
+ */
 function mapreduce(filePaths, searchQuery, preCallback, projection) {
 
     const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
@@ -23,7 +30,7 @@ function mapreduce(filePaths, searchQuery, preCallback, projection) {
         }
 
         for (let i = 0; i < numThreads; i++) {
-            const worker = new Worker(__filename, {
+            const worker = new Worker(process.argv[1], {
                 workerData: { filePath: filePaths[i], query: searchQuery, preCallback },
             });
 
@@ -58,6 +65,7 @@ function mapreduce(filePaths, searchQuery, preCallback, projection) {
         // const filePaths = ['path/to/db1.sqlite', 'path/to/db2.sqlite'];
         // const searchQuery = 'SELECT * FROM your_table WHERE your_condition;';
 
+        // let preCallback
         preCallback = preCallback || function (results) {
             // Modify or process results before pushing them to the results array
             return results.map(result => {
@@ -66,15 +74,19 @@ function mapreduce(filePaths, searchQuery, preCallback, projection) {
             });
         };
 
-        runSearchAcrossDatabases(filePaths, searchQuery, preCallback, projection || function (results) {
+        // let projection
+        projection = projection || function (results) {
             results.forEach(result => {
                 console.log(result);
             });
-        });
+        }
+
+        runSearchAcrossDatabases(filePaths, searchQuery, preCallback, projection);
     } else {
         const { filePath, query, preCallback } = workerData;
         searchInDatabase(filePath, query, preCallback)
             .then(results => {
+                console.log("results: ", results);
                 parentPort.postMessage(results);
             })
             .catch(error => {
@@ -82,7 +94,6 @@ function mapreduce(filePaths, searchQuery, preCallback, projection) {
                 parentPort.postMessage([]);
             });
     }
-
 }
 
 module.exports.mapreduce = mapreduce;
