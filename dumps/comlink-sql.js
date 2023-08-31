@@ -1,3 +1,21 @@
+/**
+ * 
+ * Package: sql-mapreduce
+ * Author: Ganesh B
+ * Description: 
+ * Install: npm i sql-mapreduce --save
+ * Github: https://github.com/ganeshkbhat/mapreduce
+ * npmjs Link: https://www.npmjs.com/package/sql-mapreduce
+ * File: .js
+ * File Description: 
+ * 
+ * 
+*/
+
+/* eslint no-console: 0 */
+
+'use strict';
+
 const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
 const sqlite3 = require('sqlite3');
 const comlink = require('comlink');
