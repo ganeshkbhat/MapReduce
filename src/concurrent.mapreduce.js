@@ -16,10 +16,13 @@
 
 'use strict';
 
-const loadbalancer = require("concurrency.js");
-const mapreduce = require("./mapreduce");
+const concurrency = require("concurrency.js");
+const sqlmr = require("./mapreduce");
 
+const mapreduce = sqlmr.mapreduce;
+const mapreduceAsync = sqlmr.mapreduceAsync;
 
+concurrency.concurrencyThreadsAsync();
 
 module.exports.cMapReduce = cMapReduce;
 module.exports.cMapReduceAsync = cMapReduceAsync;
