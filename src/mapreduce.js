@@ -26,6 +26,7 @@ const obdc = require("odbc");
 // const JDBC = require('jdbc');
 // const jinst = require('jdbc/lib/jinst');
 
+
 function mapreduce(connectionPaths, query, driverCallback, preCallback = (r) => r, projection = (r) => r) {
     const allResults = [];
     driverCallback = driverCallback || function (filePath) {
@@ -64,6 +65,8 @@ async function mapreduceAsync(connectionPaths, query, driverCallback, preCallbac
     new Promise.all(connectionPaths.forEach(driverCallback));
     return projection(allResults);
 }
+
+
 
 module.exports.mapreduce = mapreduce;
 module.exports.mapreduceAsync = mapreduceAsync;

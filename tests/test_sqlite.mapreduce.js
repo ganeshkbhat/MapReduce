@@ -1,7 +1,25 @@
+/**
+ * 
+ * Package: sql-mapreduce
+ * Author: Ganesh B
+ * Description: 
+ * Install: npm i sql-mapreduce --save
+ * Github: https://github.com/ganeshkbhat/mapreduce
+ * npmjs Link: https://www.npmjs.com/package/sql-mapreduce
+ * File: .js
+ * File Description: 
+ * 
+ * 
+*/
+
+/* eslint no-console: 0 */
+
+'use strict';
+
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { Worker, isMainThread } = require('worker_threads');
-const { searchInDatabase, runSearchAcrossDatabases } = require('./sqlite3'); // Replace with your actual code module
+const { searchInDatabase, runSearchAcrossDatabases } = require('./test_sqlite.mapreduce'); // Replace with your actual code module
 
 describe('searchInDatabase', () => {
     it('should fetch and process results from database', async () => {
