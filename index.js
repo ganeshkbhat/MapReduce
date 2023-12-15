@@ -18,6 +18,6 @@
 
 
 module.exports = {
-    ...require("./src/concurrent.mapreduce"),
+    // ...require("./src/concurrent.mapreduce"),
     ...require("./src/mapreduce"),
 }

@@ -24,5 +24,5 @@ const mapreduceAsync = sqlmr.mapreduceAsync;
 
 concurrency.concurrencyThreadsAsync();
 
-module.exports.cMapReduce = cMapReduce;
-module.exports.cMapReduceAsync = cMapReduceAsync;
+module.exports.parallelMapReduce = cMapReduce;
+module.exports.parallelMapReduceAsync = cMapReduceAsync;

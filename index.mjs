@@ -15,3 +15,25 @@
 /* eslint no-console: 0 */
 
 'use strict';
+
+
+import {
+    mapreduce,
+    mapreduceAsync,
+    // parallelMapReduce,
+    // parallelMapReduceAsync
+} from './index.js';
+
+export default {
+    mapreduce,
+    mapreduceAsync,
+    // parallelMapReduce,
+    // parallelMapReduceAsync
+}
+
+export {
+    mapreduce,
+    mapreduceAsync,
+    parallelMapReduce,
+    parallelMapReduceAsync
+}
