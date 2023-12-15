@@ -34,6 +34,6 @@ export default {
 export {
     mapreduce,
     mapreduceAsync,
-    parallelMapReduce,
-    parallelMapReduceAsync
+    // parallelMapReduce,
+    // parallelMapReduceAsync
 }
