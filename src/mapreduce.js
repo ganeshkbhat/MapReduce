@@ -16,57 +16,42 @@
 
 'use strict';
 
-// https://www.npmjs.com/package/sqlite3
-const sqlite3 = require('sqlite3');
-
-// https://www.npmjs.com/package/odbc
-const obdc = require("odbc");
-
-// // https://www.npmjs.com/package/jdbc
-// const JDBC = require('jdbc');
-// const jinst = require('jdbc/lib/jinst');
-
-
 function mapreduce(connectionPaths, query, driverCallback, preCallback = (r) => r, projection = (r) => r) {
     const allResults = [];
-    driverCallback = driverCallback || function (filePath) {
-        const db = new sqlite3.Database(filePath);
-        db.all(query, [], (err, results) => {
-            if (err) {
-                console.error(err);
-            } else {
-                results = preCallback(results);
-                allResults.push(...results);
+    driverCallback = driverCallback || function (filePath, query) {
+        function executeQuery(err) {
+            if (!!err) {
+                return err;
             }
-            db.close();
-        });
-    };
-    connectionPaths.forEach(driverCallback);
+            db.all(query, [], function (err, results) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    results = preCallback(results);
+                    allResults.push(...results);
+                }
+                db.close();
+            }.bind(null, allResults));
+        }
+        const db = new sqlite3.Database(filePath, sqlite3.OPEN_READWRITE, executeQuery.bind(null, allResults));
+    }.bind(null, allResults);
+    new Promise.all(connectionPaths.forEach((v) => driverCallback(v, query)));
     return projection(allResults);
 }
 
 async function mapreduceAsync(connectionPaths, query, driverCallback, preCallback = (r) => r, projection = (r) => r) {
     const allResults = [];
 
-    driverCallback = driverCallback || function (filePath, query) {
-        const db = new sqlite3.Database(filePath);
+    driverCallback = driverCallback ? driverCallback instanceof  || function (filePath, query) {
+        
         return new Promise((resolve, reject) => {
-            db.all(query, [], (err, results) => {
-                db.close();
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(results);
-                }
-            });
+            driverCallback(...args).bind(null, resolve, reject);    
         });
-    };
+    }.bind(null, allResults);;
 
-    new Promise.all(connectionPaths.forEach(driverCallback));
+    new Promise.all(connectionPaths.forEach((v) => driverCallback(v, query)));
     return projection(allResults);
 }
-
-
 
 module.exports.mapreduce = mapreduce;
 module.exports.mapreduceAsync = mapreduceAsync;
