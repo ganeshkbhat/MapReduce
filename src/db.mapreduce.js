@@ -52,21 +52,6 @@ function mapreduce(connectionPaths, query, driverCallback, preCallback = (r) => 
 async function mapreduceAsync(connectionPaths, query, driverCallback, preCallback = (r) => r, projection = (r) => r) {
     const allResults = [];
 
-    driverCallback = driverCallback || function (filePath, query) {
-        const db = new sqlite3.Database(filePath);
-        return new Promise((resolve, reject) => {
-            db.all(query, [], (err, results) => {
-                db.close();
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-    };
-
-    new Promise.all(connectionPaths.forEach(driverCallback));
     return projection(allResults);
 }
 
